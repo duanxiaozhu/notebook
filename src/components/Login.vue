@@ -7,7 +7,7 @@
           <div class="form">
             <h3 @click="selectedShow">创建账户</h3>
 
-            <div :class="{show: isShowRegister}" class="register">
+            <div :class="{ show: isShowRegister }" class="register">
               <input
                 type="text"
                 v-model="register.username"
@@ -27,7 +27,7 @@
 
             <h3 @click="selectedShow">登录</h3>
 
-            <div :class="{show: isShowLogin}" class="login">
+            <div :class="{ show: isShowLogin }" class="login">
               <input
                 type="text"
                 v-model="login.username"
@@ -36,13 +36,12 @@
               <input
                 type="password"
                 v-model="login.password"
-                @keyup.enter="onLogin" 
+                @keyup.enter="onLogin"
                 placeholder="密码"
               />
               <p v-bind:class="{ error: login.isError }">{{ login.notice }}</p>
               <div class="button" @click="onLogin">登录</div>
             </div>
-
           </div>
         </div>
       </div>
@@ -53,6 +52,8 @@
 <script>
 import LottieSvg from "@/components/LottieSvg";
 import animationData from "@/assets/svg/notebook";
+import request from "@/helpers/request";
+
 export default {
   components: {
     LottieSvg
@@ -105,6 +106,12 @@ export default {
       console.log(
         `start register..., username: ${this.register.username} , password: ${this.register.password}`
       );
+      request("/auth/register", "POST", {
+        username: this.register.username,
+        password: this.register.password
+      }).then(data => {
+        console.log(data);
+      });
     },
     onLogin() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
@@ -123,6 +130,12 @@ export default {
       console.log(
         `start login..., username: ${this.login.username} , password: ${this.login.password}`
       );
+      request("/auth/login", "POST", {
+        username: this.login.username,
+        password: this.login.password
+      }).then(data => {
+        console.log(data);
+      });
     }
   }
 };
