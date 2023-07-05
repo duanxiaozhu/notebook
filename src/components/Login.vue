@@ -52,7 +52,9 @@
 <script>
 import LottieSvg from "@/components/LottieSvg";
 import animationData from "@/assets/svg/notebook";
-import request from "@/helpers/request";
+import Auth from "@/apis/auth";
+
+Auth.getInfo().then(data=>{console.log(data)})
 
 export default {
   components: {
@@ -86,10 +88,6 @@ export default {
       this.isShowLogin = !this.isShowLogin;
       this.isShowRegister = !this.isShowRegister;
     },
-    // showRegister() {
-    //   this.isShowLogin = false;
-    //   this.isShowRegister = true;
-    // },
     onRegister() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.register.username)) {
         this.register.isError = true;
@@ -106,12 +104,10 @@ export default {
       console.log(
         `start register..., username: ${this.register.username} , password: ${this.register.password}`
       );
-      request("/auth/register", "POST", {
+      Auth.register({
         username: this.register.username,
         password: this.register.password
-      }).then(data => {
-        console.log(data);
-      });
+      }).then(data=>{console.log(data)})
     },
     onLogin() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
@@ -130,12 +126,10 @@ export default {
       console.log(
         `start login..., username: ${this.login.username} , password: ${this.login.password}`
       );
-      request("/auth/login", "POST", {
+      Auth.login({
         username: this.login.username,
         password: this.login.password
-      }).then(data => {
-        console.log(data);
-      });
+      }).then(data=>{console.log(data)})
     }
   }
 };
