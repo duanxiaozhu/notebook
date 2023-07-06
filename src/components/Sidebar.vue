@@ -22,14 +22,15 @@
 import Avatar from "@/components/Avatar";
 import Auth from "@/apis/auth";
 
-
 export default {
   components: {
     Avatar
   },
-  methods:{
-    Logout(){
-      Auth.logout().then(data=>{console.log(data)})
+  methods: {
+    Logout() {
+      Auth.logout().then(data => {
+        this.$router.push({ path: login });
+      });
     }
   }
 };
