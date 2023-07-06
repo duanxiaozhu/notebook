@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import Bus from "@/helpers/bus";
 import LottieSvg from "@/components/LottieSvg";
 import animationData from "@/assets/svg/notebook";
 import Auth from "@/apis/auth";
@@ -108,6 +109,7 @@ export default {
         .then(data => {
           this.register.isError = false;
           this.register.notice = "";
+          Bus.$emit("userInfo", { username: this.login.username });
           this.$router.push({ path: "notebooks" });
         })
         .then(data => {
@@ -133,6 +135,7 @@ export default {
         .then(data => {
           this.login.isError = true;
           this.login.notice = "";
+          Bus.$emit("userInfo", { username: this.login.username });
           this.$router.push({ path: "notebooks" });
         })
         .catch(data => {

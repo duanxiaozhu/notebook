@@ -29,7 +29,7 @@ export default {
   methods: {
     Logout() {
       Auth.logout().then(data => {
-        this.$router.push({ path: login });
+        this.$router.push({ path: 'login' });
       });
     }
   }
