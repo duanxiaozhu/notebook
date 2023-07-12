@@ -79,56 +79,6 @@
 
     }
   }
-  // import Notebooks from '@/apis/notebooks'
-  // import Notes from '@/apis/notes'
-  // import Bus from '@/helpers/bus'
-
-  // export default {
-  //   created() {
-  //     Notebooks.getAll()
-  //       .then(res => {
-  //         this.notebooks = res.data
-  //         this.curBook = this.notebooks.find(notebook => notebook.id == this.$route.query.notebookId)
-  //           || this.notebooks[0] || {}
-  //         return Notes.getAll({ notebookId: this.curBook.id })
-  //       }).then(res => {
-  //         this.notes = res.data
-  //         this.$emit('update:notes', this.notes)
-  //         Bus.$emit('update:notes', this.notes)
-  //       })
-  //   },
-
-  //   data() {
-  //     return {
-  //       notebooks: [],
-  //       notes:[],
-  //       curBook: {}
-  //     }
-  //   },
-
-  //   methods: {
-  //     handleCommand(notebookId) {
-  //       if(notebookId == 'trash') {
-  //         return this.$router.push({ path: '/trash'})
-  //       }
-  //       this.curBook = this.notebooks.find(notebook => notebook.id == notebookId)
-  //       Notes.getAll({ notebookId })
-  //         .then(res => {
-  //           this.notes = res.data
-  //           this.$emit('update:notes', this.notes)
-  //         })
-  //     },
-
-  //     addNote() {
-  //       Notes.addNote({ notebookId: this.curBook.id })
-  //         .then(res => {
-  //           console.log(res)
-  //           this.notes.unshift(res.data)
-  //         })
-  //     }
-
-  //   }
-  // }
 
 </script>
 

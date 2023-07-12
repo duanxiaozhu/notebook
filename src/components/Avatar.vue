@@ -27,30 +27,6 @@
         ])
     }
   }
-// import Auth from "@/apis/auth";
-// import Bus from '@/helpers/bus'
-// export default {
-//   data() {
-//     return {
-//       username: "未登录"
-//     };
-//   },
-//   created() {
-//     Bus.$on('userInfo',user=>{
-//       this.username=user.username
-//     })
-//     Auth.getInfo().then(res => {
-//       if (res.isLogin) {
-//         this.username = res.data.username;
-//       }
-//     });
-//   },
-//   computed: {
-//     slug() {
-//       return this.username.charAt(0);
-//     }
-//   }
-// };
 </script>
 
 <style scoped>

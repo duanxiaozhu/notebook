@@ -56,9 +56,6 @@ import animationData from "@/assets/svg/notebook";
 import Auth from "@/apis/auth";
   import { mapGetters, mapActions } from 'vuex'
 
-// Auth.getInfo().then(data => {
-//   console.log(data);
-// });
 
 export default {
   components: {
