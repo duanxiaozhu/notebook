@@ -54,10 +54,11 @@ import Bus from "@/helpers/bus";
 import LottieSvg from "@/components/LottieSvg";
 import animationData from "@/assets/svg/notebook";
 import Auth from "@/apis/auth";
+  import { mapGetters, mapActions } from 'vuex'
 
-Auth.getInfo().then(data => {
-  console.log(data);
-});
+// Auth.getInfo().then(data => {
+//   console.log(data);
+// });
 
 export default {
   components: {
@@ -87,6 +88,10 @@ export default {
     };
   },
   methods: {
+          ...mapActions({
+        loginUser: 'login',
+        registerUser: 'register'
+        }),
     selectedShow() {
       this.isShowLogin = !this.isShowLogin;
       this.isShowRegister = !this.isShowRegister;
@@ -128,20 +133,31 @@ export default {
         this.login.notice = "密码长度为6~16个字符";
         return;
       }
-      Auth.login({
-        username: this.login.username,
-        password: this.login.password
-      })
-        .then(data => {
-          this.login.isError = true;
-          this.login.notice = "";
-          Bus.$emit("userInfo", { username: this.login.username });
-          this.$router.push({ path: "notebooks" });
-        })
-        .catch(data => {
-          this.login.isError = true;
-          this.login.notice = data.msg;
-        });
+      // Auth.login({
+      //   username: this.login.username,
+      //   password: this.login.password
+      // })
+      //   .then(data => {
+      //     this.login.isError = true;
+      //     this.login.notice = "";
+      //     Bus.$emit("userInfo", { username: this.login.username });
+      //     this.$router.push({ path: "notebooks" });
+      //   })
+      //   .catch(data => {
+      //     this.login.isError = true;
+      //     this.login.notice = data.msg;
+      //   });
+              this.loginUser({
+            username: this.login.username, 
+            password: this.login.password
+          }).then(() => {
+            this.login.isError = false
+            this.login.notice = ''
+            this.$router.push({ path: 'notebooks' })
+          }).catch(data => {
+            this.login.isError = true
+            this.login.notice = data.msg
+          })
     }
   }
 };
