@@ -9,14 +9,14 @@
           <span> 更新日期: {{curNote.updatedAtFriendly}}</span>
           <span> {{statusText}}</span>
           <span class="iconfont icon-delete" @click="onDeleteNote"></span>
-          <span class="iconfont icon-fullscreen" @click="isShowPreview = !isShowPreview"></span>
+          <span class="iconfont" :class="isShowPreview?'icon-edit':'icon-eye'" @click="isShowPreview = !isShowPreview"></span>
         </div>
         <div class="note-title">
           <input type="text" v-model="curNote.title" @input="onUpdateNote" @keydown="statusText='正在输入...'" placeholder="输入标题">
         </div>
         <div class="editor">
-          <textarea v-show="isShowPreview"  v-model="curNote.content" @input="onUpdateNote" @keydown="statusText='正在输入...'" placeholder="输入内容, 支持 markdown 语法"></textarea>
-          <div class="preview markdown-body" v-html="previewContent" v-show="!isShowPreview">
+          <codemirror v-model="curNote.content" :options="cmOptions" v-show="!isShowPreview" @input="onUpdateNote" @inputRead="statusText='正在输入...'"></codemirror>
+          <div class="preview markdown-body" v-html="previewContent" v-show="isShowPreview">
           </div>
         </div>
       </div>
@@ -30,6 +30,10 @@
 import NoteSidebar from '@/components/NoteSidebar'
 import _ from 'lodash'
 import MarkdownIt from 'markdown-it'
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/markdown/markdown.js'
+import 'codemirror/theme/neat.css'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 
@@ -38,13 +42,22 @@ let md = new MarkdownIt()
 
 export default {
   components: {
-    NoteSidebar
+    NoteSidebar,
+    codemirror
   },
   
   data () {
     return {
       statusText: '笔记未改动',
-      isShowPreview: false
+      isShowPreview: false,
+            cmOptions: {
+        tabSize: 4,
+        mode: 'text/x-markdown',
+        theme: 'neat',
+        lineNumbers: false,
+        line: true,
+        // more codemirror options, 更多 codemirror 的高级配置...
+      }
     }
   },
 
@@ -55,7 +68,8 @@ export default {
   computed: {
     ...mapGetters([
       'notes',
-      'curNote'
+      'curNote',
+           'curBook'
       ]),
 
     previewContent() {
@@ -100,6 +114,7 @@ export default {
     next()
   }
 }
+
 </script>
 
 <style lang="less">

@@ -1,6 +1,6 @@
 import axios from "axios";
-import baseURLConfig from './config-baseURL'
-import { Message } from 'element-ui'
+import baseURLConfig from "./config-baseURL";
+import { Message } from "element-ui";
 
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
@@ -12,9 +12,9 @@ export default function request(url, type = "GET", data = {}) {
     let option = {
       url,
       method: type,
-      ValidityState(status) {
+      validateStatus(status) {
         return (status >= 200 && status < 300) || status === 400;
-      }
+      },
     };
     if (type.toLowerCase() === "get") {
       option.params = data;
@@ -22,17 +22,17 @@ export default function request(url, type = "GET", data = {}) {
       option.data = data;
     }
     axios(option)
-      .then(res => {
+      .then((res) => {
         if (res.status === 200) {
           resolve(res.data);
         } else {
-          Message.error(res.data.msg)
-          reject(res.data)
+          Message.error(res.data.msg);
+          reject(res.data);
         }
       })
-      .catch(err => {
-        Message.error('网络异常')
-        reject({msg: '网络异常'})
+      .catch((err) => {
+        Message.error("网络异常");
+        reject({ msg: "网络异常" });
       });
   });
 }
